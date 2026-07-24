@@ -5,17 +5,50 @@
 <title>System Summary</title>
 <style>
 body {
-  background-color: #0b0a08;
-  color: #a89f8f;
+  font-family: sans-serif;
 }
-h1, h2, h3 {
-  color: #c2a469;
+table, th, td {
+  border: 1px solid currentColor;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 6px;
+}
+button#theme-toggle {
+  margin-left: 12px;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border: 1px solid currentColor;
+  border-radius: 20px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+}
+button#theme-toggle:hover {
+  opacity: 0.6;
 }
 </style>
+<script>
+function applyTheme(isDark) {
+  document.body.style.backgroundColor = isDark ? '#000000' : '#ffffff';
+  document.body.style.color = isDark ? '#ffffff' : '#000000';
+  document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+}
+function toggleTheme() {
+  var isDark = document.body.getAttribute('data-theme') === 'dark';
+  applyTheme(!isDark);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(prefersDark);
+});
+</script>
 </head>
 <body>
 
-<h1>System Summary</h1>
+<h1>System Summary <button id="theme-toggle" onclick="toggleTheme()">Toggle Theme</button></h1>
 
 <h2>Dice</h2>
 <ul>
