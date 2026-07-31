@@ -4,17 +4,136 @@
 <meta charset="UTF-8">
 <title>System Summary</title>
 <style>
+ :root {
+  color-scheme: light dark;
+  --page-bg: #f4efe7;
+  --page-bg-accent: #dfd5c7;
+  --panel-bg: rgba(255, 251, 244, 0.88);
+  --panel-border: rgba(63, 51, 36, 0.16);
+  --panel-shadow: 0 24px 70px rgba(52, 42, 28, 0.16);
+  --text-color: #1f1a14;
+  --muted-color: #6f665b;
+  --index-bg: linear-gradient(180deg, rgba(255, 248, 236, 0.98), rgba(235, 223, 205, 0.96));
+  --index-border: rgba(111, 86, 53, 0.2);
+  --index-text: #33261a;
+  --index-link: rgba(51, 38, 26, 0.9);
+  --index-link-hover-bg: rgba(140, 95, 53, 0.14);
+  --index-link-hover-text: #1f1a14;
+}
+html {
+  scroll-behavior: smooth;
+}
 body {
-  font-family: sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.55), transparent 42%),
+    linear-gradient(135deg, var(--page-bg), var(--page-bg-accent));
+  color: var(--text-color);
+}
+.layout {
+  display: flex;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 24px 40px;
+  align-items: flex-start;
+}
+.floating-index {
+  position: sticky;
+  top: 24px;
+  width: 220px;
+  flex: 0 0 220px;
+  padding: 18px 16px;
+  border: 1px solid var(--index-border);
+  border-radius: 20px;
+  background: var(--index-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 14px 36px rgba(25, 16, 10, 0.28);
+}
+.floating-index h2 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--index-text);
+}
+.floating-index nav {
+  display: grid;
+  gap: 8px;
+}
+.floating-index a {
+  color: var(--index-link);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+.floating-index a:hover {
+  background: var(--index-link-hover-bg);
+  color: var(--index-link-hover-text);
+  transform: translateX(4px);
+}
+.content-shell {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.content-bubble {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 30px 34px 40px;
+  border: 1px solid var(--panel-border);
+  border-radius: 32px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(14px);
+  box-shadow: var(--panel-shadow);
+}
+.section-title {
+  scroll-margin-top: 24px;
+}
+body[data-theme="dark"] {
+  --page-bg: #16120f;
+  --page-bg-accent: #241d18;
+  --panel-bg: rgba(33, 27, 22, 0.82);
+  --panel-border: rgba(255, 235, 215, 0.12);
+  --panel-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+  --text-color: #f1e7da;
+  --muted-color: #c6b7a8;
+  --index-bg: linear-gradient(180deg, rgba(18, 15, 12, 0.96), rgba(36, 29, 23, 0.94));
+  --index-border: rgba(255, 233, 204, 0.1);
+  --index-text: #fff4e8;
+  --index-link: rgba(255, 236, 216, 0.86);
+  --index-link-hover-bg: rgba(255, 196, 122, 0.18);
+  --index-link-hover-text: #ffffff;
+}
+body[data-theme="light"] {
+  --page-bg: #f4efe7;
+  --page-bg-accent: #dfd5c7;
+  --panel-bg: rgba(255, 251, 244, 0.88);
+  --panel-border: rgba(63, 51, 36, 0.16);
+  --panel-shadow: 0 24px 70px rgba(52, 42, 28, 0.16);
+  --text-color: #1f1a14;
+  --muted-color: #6f665b;
+  --index-bg: linear-gradient(180deg, rgba(255, 248, 236, 0.98), rgba(235, 223, 205, 0.96));
+  --index-border: rgba(111, 86, 53, 0.2);
+  --index-text: #33261a;
+  --index-link: rgba(51, 38, 26, 0.9);
+  --index-link-hover-bg: rgba(140, 95, 53, 0.14);
+  --index-link-hover-text: #1f1a14;
 }
 table, th, td {
   border: 1px solid currentColor;
   border-collapse: collapse;
 }
+table {
+  width: 100%;
+}
 th, td {
   padding: 6px;
+  text-align: center;
 }
-button#theme-toggle {
+#theme-toggle {
   margin-left: 12px;
   font-size: 0.85rem;
   padding: 6px 14px;
@@ -24,168 +143,202 @@ button#theme-toggle {
   color: inherit;
   cursor: pointer;
   vertical-align: middle;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
 }
-button#theme-toggle:hover {
+#theme-toggle:hover {
   opacity: 0.6;
+}
+@media (max-width: 980px) {
+  .layout {
+    flex-direction: column;
+    padding: 18px 14px 28px;
+  }
+  .floating-index {
+    position: static;
+    width: auto;
+    flex-basis: auto;
+  }
+  .content-bubble {
+    padding: 22px 18px 28px;
+    border-radius: 24px;
+  }
 }
 </style>
 <script>
-function applyTheme(isDark) {
-  document.body.style.backgroundColor = isDark ? '#000000' : '#ffffff';
-  document.body.style.color = isDark ? '#ffffff' : '#000000';
-  document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
-}
-function toggleTheme() {
-  var isDark = document.body.getAttribute('data-theme') === 'dark';
-  applyTheme(!isDark);
-}
-document.addEventListener('DOMContentLoaded', function() {
-  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  applyTheme(prefersDark);
-});
+  function applyTheme(isDark) {
+    document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  }
+  function toggleTheme() {
+    var isDark = document.body.getAttribute('data-theme') === 'dark';
+    applyTheme(!isDark);
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(prefersDark);
+  });
 </script>
 </head>
 <body>
+<div class="layout">
+  <aside class="floating-index" aria-label="Section index">
+    <h2>Index</h2>
+    <nav>
+      <a href="#dice">Dice</a>
+      <a href="#attributes">Attributes</a>
+      <a href="#creation">Creation</a>
+      <a href="#hp">HP</a>
+      <a href="#armor">Armor</a>
+      <a href="#mana">Mana</a>
+      <a href="#spellcasting">Spellcasting</a>
+      <a href="#equipment">Equipment</a>
+      <a href="#weight">Weight</a>
+      <a href="#combat-rules">Combat rules</a>
+    </nav>
+  </aside>
 
-<h1>System Summary <button id="theme-toggle" onclick="toggleTheme()">Toggle Theme</button></h1>
+  <main class="content-shell">
+    <section class="content-bubble">
+      <h1>System Summary <button id="theme-toggle" onclick="toggleTheme()">Toggle Theme</button></h1>
 
-<h2>Dice</h2>
-<ul>
-<li>2d8: base roll for all checks, add mods, compare to Challenge Score</li>
-<li>Advantage: 3d8, summed</li>
-<li>Disadvantage: 1d8</li>
-<li>No stacking (min 1 die, max 3 dice, multiple sources cancel out)</li>
-<li>Critical: two natural 8s among rolled dice</li>
-<li>Fumble: two natural 1s</li>
-<li>Both impossible on Disadvantage</li>
-<li>d100: GM-called for random events</li>
-<li>Gambit roll: GM-called for 50/50 events</li>
-<li>Grace: builds on failed rolls, spend all at once to boost a roll, max 8, resets only on combat start/end</li>
-</ul>
+      <h2 id="dice" class="section-title">Dice</h2>
+      <ul>
+      <li>2d8: base roll for all checks, add mods, compare to Challenge Score</li>
+      <li>Advantage: 3d8, summed</li>
+      <li>Disadvantage: 1d8</li>
+      <li>No stacking (min 1 die, max 3 dice, multiple sources cancel out)</li>
+      <li>Critical: two natural 8s among rolled dice</li>
+      <li>Fumble: two natural 1s</li>
+      <li>Both impossible on Disadvantage</li>
+      <li>d100: GM-called for random events</li>
+      <li>Gambit roll: GM-called for 50/50 events</li>
+      <li>Grace: builds on failed rolls, spend all at once to boost a roll, max 8, resets only on combat start/end</li>
+      </ul>
 
-<h2>Attributes</h2>
-<ul>
-<li><strong>Vigor</strong>: Health and endurance</li>
-<li><strong>Fortitude</strong>: Toughness and damage resistance</li>
-<li><strong>Strength</strong>: Physical power, lifting, and breaking</li>
-<li><strong>Dexterity</strong>: Precision, control, and agility</li>
-<li><strong>Intelligence</strong>: Knowledge, research, and learning</li>
-<li><strong>Arcane</strong>: Magic knowledge and manipulation</li>
-<li><strong>Charisma</strong>: Persuasion, presence, and social influence</li>
-<li><strong>Reflex</strong>: Quick reactions and evasive movement</li>
-<li><strong>Insight</strong>: Reading motives, lies, and hidden meaning</li>
-<li><strong>Awareness</strong>: Noticing surroundings, threats, and details</li>
-</ul>
+      <h2 id="attributes" class="section-title">Attributes</h2>
+      <ul>
+      <li><strong>Vigor</strong>: Health and endurance</li>
+      <li><strong>Fortitude</strong>: Toughness and damage resistance</li>
+      <li><strong>Strength</strong>: Physical power, lifting, and breaking</li>
+      <li><strong>Dexterity</strong>: Precision, control, and agility</li>
+      <li><strong>Intelligence</strong>: Knowledge, research, and learning</li>
+      <li><strong>Arcane</strong>: Magic knowledge and manipulation</li>
+      <li><strong>Charisma</strong>: Persuasion, presence, and social influence</li>
+      <li><strong>Reflex</strong>: Quick reactions and evasive movement</li>
+      <li><strong>Insight</strong>: Reading motives, lies, and hidden meaning</li>
+      <li><strong>Awareness</strong>: Noticing surroundings, threats, and details</li>
+      </ul>
 
-<h2>Creation</h2>
-<ul>
-<li>Species: applied first, up to +2 in any one stat, nets +3 overall (negatives allowed)</li>
-<li>Pool: 12 points, +4 cap per stat, spent after species</li>
-<li>Absolute Level 1 ceiling per stat: +6</li>
-<li>Absolute max per stat: +8</li>
-</ul>
+      <h2 id="creation" class="section-title">Creation</h2>
+      <ul>
+      <li>Species: applied first, up to +2 in any one stat, nets +3 overall (negatives allowed)</li>
+      <li>Pool: 12 points, +4 cap per stat, spent after species</li>
+      <li>Absolute Level 1 ceiling per stat: +6</li>
+      <li>Absolute max per stat: +8</li>
+      </ul>
 
-<h2>HP</h2>
-<p>Total HP = Cumulative Base HP (table below) + (Vigor x Level)</p>
-<p>Base HP grows every level regardless of Vigor investment. Vigor adds a bonus on top, scaling with Level.</p>
+      <h2 id="hp" class="section-title">HP</h2>
+      <p>Total HP = Cumulative Base HP (table below) + (Vigor x Level)</p>
+      <p>Base HP grows every level regardless of Vigor investment. Vigor adds a bonus on top, scaling with Level.</p>
 
-<table border="1" cellpadding="6" cellspacing="0">
-<tr>
-<th>Level</th>
-<th>Gain</th>
-<th>Cumulative Base HP</th>
-</tr>
-<tr><td>1</td><td>+8</td><td>8</td></tr>
-<tr><td>2</td><td>+2</td><td>10</td></tr>
-<tr><td>3</td><td>+2</td><td>12</td></tr>
-<tr><td>4</td><td>+2</td><td>14</td></tr>
-<tr><td>5</td><td>+2</td><td>16</td></tr>
-<tr><td>6</td><td>+2</td><td>18</td></tr>
-<tr><td>7</td><td>+2</td><td>20</td></tr>
-<tr><td>8</td><td>+2</td><td>22</td></tr>
-<tr><td>9</td><td>+2</td><td>24</td></tr>
-<tr><td>10</td><td>+2</td><td>26</td></tr>
-<tr><td>11</td><td>+2</td><td>28</td></tr>
-<tr><td>12</td><td>+2</td><td>30</td></tr>
-<tr><td>13</td><td>+2</td><td>32</td></tr>
-<tr><td>14</td><td>+2</td><td>34</td></tr>
-<tr><td>15</td><td>+2</td><td>36</td></tr>
-<tr><td>16</td><td>+2</td><td>38</td></tr>
-</table>
+      <table border="1" cellpadding="6" cellspacing="0">
+      <tr>
+      <th>Level</th>
+      <th>Gain</th>
+      <th>Cumulative Base HP</th>
+      </tr>
+      <tr><td>1</td><td>+8</td><td>8</td></tr>
+      <tr><td>2</td><td>+2</td><td>10</td></tr>
+      <tr><td>3</td><td>+2</td><td>12</td></tr>
+      <tr><td>4</td><td>+2</td><td>14</td></tr>
+      <tr><td>5</td><td>+2</td><td>16</td></tr>
+      <tr><td>6</td><td>+2</td><td>18</td></tr>
+      <tr><td>7</td><td>+2</td><td>20</td></tr>
+      <tr><td>8</td><td>+2</td><td>22</td></tr>
+      <tr><td>9</td><td>+2</td><td>24</td></tr>
+      <tr><td>10</td><td>+2</td><td>26</td></tr>
+      <tr><td>11</td><td>+2</td><td>28</td></tr>
+      <tr><td>12</td><td>+2</td><td>30</td></tr>
+      <tr><td>13</td><td>+2</td><td>32</td></tr>
+      <tr><td>14</td><td>+2</td><td>34</td></tr>
+      <tr><td>15</td><td>+2</td><td>36</td></tr>
+      <tr><td>16</td><td>+2</td><td>38</td></tr>
+      </table>
 
-<h2>Armor</h2>
-<ul>
-<li>Base Armor: 6</li>
-<li>Formula: 6 + Fortitude, flat, no level scaling</li>
-</ul>
+      <h2 id="armor" class="section-title">Armor</h2>
+      <ul>
+      <li>Base Armor: 6</li>
+      <li>Formula: 6 + Fortitude, flat, no level scaling</li>
+      </ul>
 
-<h2>Mana</h2>
-<ul>
-<li>Requires a spellcasting trait, not every character can cast</li>
-<li>Formula: Level + Intelligence + Arcane</li>
-<li>Costs: Cantrip 0, Tier 1 = 1, Tier 2 = 2, Tier 3 = 3, Tier 4 = 4, Tier 5 = 5</li>
-<li>Tier unlocks: Level 1/3/5/7/9 (Tier 1 through 5)</li>
-<li>Upcasting: any known spell can be cast at a higher tier for extra effect, up to Tier 6 max, even though no actual Tier 6 spells exist</li>
-<li>Refill: half on short rest, full on long rest, potions (4-12 by tier), rare traits</li>
-</ul>
+      <h2 id="mana" class="section-title">Mana</h2>
+      <ul>
+      <li>Requires a spellcasting trait, not every character can cast</li>
+      <li>Formula: Level + Intelligence + Arcane</li>
+      <li>Costs: Cantrip 0, Tier 1 = 1, Tier 2 = 2, Tier 3 = 3, Tier 4 = 4, Tier 5 = 5</li>
+      <li>Tier unlocks: Level 1/3/5/7/9 (Tier 1 through 5)</li>
+      <li>Upcasting: any known spell can be cast at a higher tier for extra effect, up to Tier 6 max, even though no actual Tier 6 spells exist</li>
+      <li>Refill: half on short rest, full on long rest, potions (4-12 by tier), rare traits</li>
+      </ul>
 
-<h2>Spellcasting</h2>
-<ul>
-<li>Governing stat: Arcane (both groups)</li>
-<li>Sorceries: Arcane, Void, Abyss</li>
-<li>Incantations: Elemental, Bestial, Divine, Blood</li>
-<li>Locked into chosen school at creation, unless a trait says otherwise</li>
-</ul>
+      <h2 id="spellcasting" class="section-title">Spellcasting</h2>
+      <ul>
+      <li>Governing stat: Arcane (both groups)</li>
+      <li>Sorceries: Arcane, Void, Abyss</li>
+      <li>Incantations: Elemental, Bestial, Divine, Blood</li>
+      <li>Locked into chosen school at creation, unless a trait says otherwise</li>
+      </ul>
 
-<h2>Equipment</h2>
+      <h2 id="equipment" class="section-title">Equipment</h2>
 
-<p>Weapon Attack = 2d8 + Atk + Accuracy Bonus (from spells and/or traits)</p>
-<p>Weapon Damage = Weapon Base Damage + Damage Bonus (from traits and/or spells)</p>
-<p>Weapon Crit = [Weapon Base Damage + Damage Bonus (from traits and/or spells)] * 2</p>
+      <p>Weapon Attack = 2d8 + Atk + Accuracy Bonus (from spells and/or traits)</p>
+      <p>Weapon Damage = Weapon Base Damage + Damage Bonus (from traits and/or spells)</p>
+      <p>Weapon Crit = [Weapon Base Damage + Damage Bonus (from traits and/or spells)] * 2</p>
 
-<h3>Weapon</h3>
-<ul>
-<li>Requirements</li>
-<li>Attack</li>
-<li>Damage</li>
-<li>Weight</li>
-<li>Optional: skill, stat boost etc</li>
-</ul>
+      <h3>Weapon</h3>
+      <ul>
+      <li>Requirements</li>
+      <li>Attack</li>
+      <li>Damage</li>
+      <li>Weight</li>
+      <li>Optional: skill, stat boost etc</li>
+      </ul>
 
-<h3>Staff / Catalyst</h3>
-<ul>
-<li>Requirements</li>
-<li>Attack</li>
-<li>Spell Damage Bonus</li>
-<li>Weight</li>
-<li>Optional: skill, stat boost etc</li>
-</ul>
+      <h3>Staff / Catalyst</h3>
+      <ul>
+      <li>Requirements</li>
+      <li>Attack</li>
+      <li>Spell Damage Bonus</li>
+      <li>Weight</li>
+      <li>Optional: skill, stat boost etc</li>
+      </ul>
 
-<h3>Armor</h3>
-<ul>
-<li>Requirements</li>
-<li>Armor</li>
-<li>Weight</li>
-<li>Optional: HP, skill, stat boost etc</li>
-</ul>
+      <h3>Armor</h3>
+      <ul>
+      <li>Requirements</li>
+      <li>Armor</li>
+      <li>Weight</li>
+      <li>Optional: HP, skill, stat boost etc</li>
+      </ul>
 
-<h2>Weight</h2>
-<p>Weight is calculated from equipped gear compared to max carry capacity and affects movement actions.</p>
-<ul>
-<li>Light Load: less than 50% of max weight, +1 to any movement action</li>
-<li>Medium Load: 50% to 75% of max weight, base movement</li>
-<li>Heavy Load: above 75% up to 99% of max weight, -1 to any movement action</li>
-<li>Overloaded: 100% or more of max weight, cannot move</li>
-</ul>
+      <h2 id="weight" class="section-title">Weight</h2>
+      <p>Weight is calculated from equipped gear compared to max carry capacity and affects movement actions.</p>
+      <ul>
+      <li>Light Load: less than 50% of max weight, +1 to any movement action</li>
+      <li>Medium Load: 50% to 75% of max weight, base movement</li>
+      <li>Heavy Load: above 75% up to 99% of max weight, -1 to any movement action</li>
+      <li>Overloaded: 100% or more of max weight, cannot move</li>
+      </ul>
 
-<h2>Combat rules</h2>
-<p>Block, Dodge, and Parry can only be used against an incoming attack if you have an unused Action. Using one consumes that Action. No  Action = no reactive defense.</p>
-<ul>
-<li>Block: Defender contests with 2d8 + [Fortitude]. Win = reduce the damage by 50% (round down). Loss = you take full damage. Shield rule is configurable: auto-negate OR bonus to Block roll.</li>
-<li>Dodge: Defender contests with 2d8 + Reflex. Win = negate all damage and reposition 1 tile (normal movement/collision rules apply; Overloaded cannot use this action). Loss = full damage, no reposition.</li>
-<li>Parry: Requires an equipped item that is parry capable (weapon or shield). Defender contests with 2d8 + accuracy. Win = negate all damage and gain Riposte (Opportunity attack with +50% damage bonus rounded down melee range only). Loss = full damage and lose Reaction for the rest of the scene.</li>
-</ul>
+      <h2 id="combat-rules" class="section-title">Combat rules</h2>
+      <p>Block, Dodge, and Parry can only be used against an incoming attack if you have an unused Action. Using one consumes that Action. No  Action = no reactive defense.</p>
+      <ul>
+      <li>Block: Defender contests with 2d8 + [Fortitude]. Win = reduce the damage by 50% (round down). Loss = you take full damage. Shield rule is configurable: auto-negate OR bonus to Block roll.</li>
+      <li>Dodge: Defender contests with 2d8 + Reflex. Win = negate all damage and reposition 1 tile (normal movement/collision rules apply; Overloaded cannot use this action). Loss = full damage, no reposition.</li>
+      <li>Parry: Requires an equipped item that is parry capable (weapon or shield). Defender contests with 2d8 + accuracy. Win = negate all damage and gain Riposte (Opportunity attack with +50% damage bonus rounded down melee range only). Loss = full damage and lose Reaction for the rest of the scene.</li>
+      </ul>
+    </section>
+  </main>
+</div>
 
 </body>
 </html>
