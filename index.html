@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>System Summary</title>
 <style>
  :root {
@@ -178,7 +179,7 @@ th, td {
   });
 </script>
 </head>
-<body>
+<body data-theme="dark">
 <div class="layout">
   <aside class="floating-index" aria-label="Section index">
     <h2>Index</h2>
@@ -193,6 +194,8 @@ th, td {
       <a href="#equipment">Equipment</a>
       <a href="#weight">Weight</a>
       <a href="#combat-rules">Combat rules</a>
+      <a href="#turn-structure">Turn Structure &amp; Action Economy</a>
+      <a href="#conditions">Conditions</a>
     </nav>
   </aside>
 
@@ -241,7 +244,7 @@ th, td {
       <p>Base HP grows every level regardless of Vigor investment. Vigor adds a bonus on top, scaling with Level.</p>
 
       <table border="1" cellpadding="6" cellspacing="0">
-      <tr>
+      <tbody><tr>
       <th>Level</th>
       <th>Gain</th>
       <th>Cumulative Base HP</th>
@@ -262,7 +265,7 @@ th, td {
       <tr><td>14</td><td>+2</td><td>34</td></tr>
       <tr><td>15</td><td>+2</td><td>36</td></tr>
       <tr><td>16</td><td>+2</td><td>38</td></tr>
-      </table>
+      </tbody></table>
 
       <h2 id="armor" class="section-title">Armor</h2>
       <ul>
@@ -330,12 +333,78 @@ th, td {
       </ul>
 
       <h2 id="combat-rules" class="section-title">Combat rules</h2>
-      <p>Block, Dodge, and Parry can only be used against an incoming attack if you have an unused Action. Using one consumes that Action. No  Action = no reactive defense.</p>
+      <p>Block, Dodge, and Parry require an unused Action to use reactively against an incoming attack.</p>
       <ul>
-      <li>Block: Defender contests with 2d8 + [Fortitude]. Win = reduce the damage by 50% (round down). Loss = you take full damage. Shield rule is configurable: auto-negate OR bonus to Block roll.</li>
-      <li>Dodge: Defender contests with 2d8 + Reflex. Win = negate all damage and reposition 1 tile (normal movement/collision rules apply; Overloaded cannot use this action). Loss = full damage, no reposition.</li>
-      <li>Parry: Requires an equipped item that is parry capable (weapon or shield). Defender contests with 2d8 + accuracy. Win = negate all damage and gain Riposte (Opportunity attack with +50% damage bonus rounded down melee range only). Loss = full damage and lose Reaction for the rest of the scene.</li>
+      <li>Block: 2d8 + Fortitude vs attack. Win = half damage. Loss = full damage. Shield: auto-negate or roll bonus (configurable).</li>
+      <li>Dodge: 2d8 + Reflex vs attack. Win = no damage, reposition 1 tile. Loss = full damage. Unavailable if Overloaded.</li>
+      <li>Parry: requires a parry-capable weapon/shield. 2d8 + accuracy vs attack. Win = no damage + Riposte (opportunity attack, +50% damage). Loss = full damage, lose Reaction for the scene.</li>
       </ul>
+
+      <h2 id="turn-structure" class="section-title">Turn Structure &amp; Action Economy</h2>
+
+      <h3>Turn Structure</h3>
+      <ul>
+      <li>Scene: one full cycle of every creature's turn. Ends when everyone has acted (Narrator may extend it).</li>
+      <li>Initiative: order of engagement + Narrator ruling. Unconscious creatures drop to the bottom of the order until revived.</li>
+      <li>NPC Initiative: uses a Turn Delay set in their stat block instead of rolled initiative.</li>
+      <li>Ambush: attacking an unaware target lets the attacker act before normal initiative/delay.</li>
+      <li>Opportunity Attack: when a creature leaves another's melee range, the remaining creature may make a melee attack against it (uses the Reaction).</li>
+      </ul>
+
+      <h3>Action Economy</h3>
+      <ul>
+      <li>Each Turn = 2 Actions. Only 1 Attack per turn by default (some traits bypass this).</li>
+      <li>Each Scene = 1 Reaction.</li>
+      <li>Held Action: hold 1 unused Action until your next turn, triggering it when a declared condition is met. (This is what powers Block/Dodge/Parry.)</li>
+      </ul>
+
+      <h2 id="conditions" class="section-title">Conditions</h2>
+
+      <h3>Buildup Mechanic</h3>
+      <p>Poisoned, Toxic, Rotted, Bleed, Frost, and Madness use a Buildup meter. Weapons/spells/hazards add Buildup on hit (amount defined per source). Threshold = 20 + Fortitude (max 28 without other boosts). At Threshold, the condition procs and the meter resets to 0. If not topped up, Buildup decays by 2 per turn.</p>
+
+      <h3>Damage over Time</h3>
+      <table border="1" cellpadding="6" cellspacing="0">
+      <tbody>
+      <tr><th>Condition</th><th>Damage / Turn</th><th>Duration</th><th>Reapply</th></tr>
+      <tr><td>Poisoned</td><td>4</td><td>8 - half Fortitude (min 2 turns)</td><td>Refreshes duration to full</td></tr>
+      <tr><td>Toxic</td><td>6</td><td>8 - half Fortitude (min 2 turns)</td><td>Refreshes duration to full</td></tr>
+      <tr><td>Rotted</td><td>8</td><td>8 - half Fortitude (min 2 turns)</td><td>Refreshes duration to full</td></tr>
+      </tbody>
+      </table>
+
+      <h3>Burst Conditions</h3>
+      <p>Deal immediate damage on proc, then leave a stacking effect behind. Reapplying while active deals the damage again, adds a stack, and (for Frost/Madness) increases remaining duration.</p>
+      <table border="1" cellpadding="6" cellspacing="0">
+      <tbody>
+      <tr><th>Condition</th><th>Proc Damage</th><th>Per Stack</th><th>Duration / Removal</th></tr>
+      <tr><td>Bleed</td><td>2</td><td>-1 healing received</td><td>All stacks removed the next time healing is received</td></tr>
+      <tr><td>Frost</td><td>4</td><td>+2 damage taken</td><td>4 Scenes</td></tr>
+      <tr><td>Madness</td><td>5</td><td>+1 mana cost per spell</td><td>4 Scenes</td></tr>
+      </tbody>
+      </table>
+
+      <h3>Action/Reaction-Denying Conditions</h3>
+      <p>Conditions that remove Actions, Reactions, spellcasting, or trait use do not stack. Reapplying one only refreshes its duration.</p>
+      <ul>
+      <li>Stunned: skip your next turn.</li>
+      <li>Silenced: cannot cast spells for 1 turn.</li>
+      <li>Hesitation: cannot make weapon or unarmed attacks for 1 turn.</li>
+      <li>Dazed: cannot use trait/skill abilities for 1 turn.</li>
+      </ul>
+
+      <h3>Other Conditions</h3>
+      <ul>
+      <li>Prone: movement 0, non-ranged attacks against you have Advantage, standing up costs 1 Action, cannot Dash.</li>
+      <li>Restrained: movement 0, attacks against you have Advantage, cannot attack. Escapes with a Strength check.</li>
+      <li>Slow / Haste: stacking, -1 or +1 tile movement per stack, expires next Scene if not reapplied.</li>
+      <li>Blinded: Disadvantage on your attacks, Advantage on attacks against you.</li>
+      <li>Vigil: Advantage on your attacks, Disadvantage on attacks against you.</li>
+      <li>Charmed: must follow the charmer's non-harmful commands, expires end of Scene if not reapplied.</li>
+      <li>Feared: must spend a movement action moving away from the source each turn.</li>
+      <li>Unconscious: cannot act.</li>
+      </ul>
+
     </section>
   </main>
 </div>
