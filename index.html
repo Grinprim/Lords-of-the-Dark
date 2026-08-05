@@ -391,6 +391,7 @@ th, td {
       <li>Silenced: cannot cast spells for 1 turn.</li>
       <li>Hesitation: cannot make weapon or unarmed attacks for 1 turn.</li>
       <li>Dazed: cannot use trait/skill abilities for 1 turn.</li>
+      <li>Frightened: no resistance (bypasses Buildup/checks entirely), freezes you in place. Cannot act or react for 1 turn unless the source states otherwise.</li>
       </ul>
 
       <h3>Other Conditions</h3>
@@ -401,9 +402,11 @@ th, td {
       <li>Blinded: Disadvantage on your attacks, Advantage on attacks against you.</li>
       <li>Vigil: Advantage on your attacks, Disadvantage on attacks against you.</li>
       <li>Charmed: must follow the charmer's non-harmful commands, expires end of Scene if not reapplied.</li>
-      <li>Feared: must spend a movement action moving away from the source each turn.</li>
-      <li>Unconscious: cannot act.</li>
+      <li>Unconscious: Achieved when HP reaches 0, or when a trait/spell explicitly inflicts it. While Unconscious: counts as Prone, cannot act or use Reactions, cannot attempt Block/Dodge/Parry, and attacks against you are automatic Criticals. Ends immediately on receiving any healing that brings HP above 0, or when the Scene ends if nobody delivers a Final Blow (stabilizes at 1 HP).</li>
       </ul>
+
+      <h3>Final Blow</h3>
+      <p>Any creature adjacent to an Unconscious target may spend 1 Action to deliver a Final Blow instead of a normal attack. No roll required, it hits automatically and kills the target outright.</p>
 
     </section>
   </main>
