@@ -196,6 +196,8 @@ th, td {
       <a href="#combat-rules">Combat rules</a>
       <a href="#turn-structure">Turn Structure &amp; Action Economy</a>
       <a href="#conditions">Conditions</a>
+      <a href="#death-hollowing">Death &amp; Hollowing</a>
+      <a href="#rests">Rests</a>
     </nav>
   </aside>
 
@@ -402,11 +404,32 @@ th, td {
       <li>Blinded: Disadvantage on your attacks, Advantage on attacks against you.</li>
       <li>Vigil: Advantage on your attacks, Disadvantage on attacks against you.</li>
       <li>Charmed: must follow the charmer's non-harmful commands, expires end of Scene if not reapplied.</li>
-      <li>Unconscious: Achieved when HP reaches 0, or when a trait/spell explicitly inflicts it. While Unconscious: counts as Prone, cannot act or use Reactions, cannot attempt Block/Dodge/Parry, and attacks against you are automatic Criticals. Ends immediately on receiving any healing that brings HP above 0, or when the Scene ends if nobody delivers a Final Blow (stabilizes at 1 HP).</li>
+      <li>Unconscious: Achieved when HP reaches 0, or when a trait/spell explicitly inflicts it. While Unconscious: counts as Prone, cannot act or use Reactions, cannot attempt Block/Dodge/Parry. Only Final Blows can harm you while Unconscious, normal attacks do nothing further. Ends immediately on receiving any healing that brings HP above 0, or when the Scene ends if nobody delivers a Final Blow (stabilizes at 1 HP). See Death &amp; Hollowing below for what happens if a Final Blow lands.</li>
       </ul>
 
+      <h2 id="death-hollowing" class="section-title">Death &amp; Hollowing</h2>
+
+      <h3>Limb Loss</h3>
+      <p>If you lose a limb, you have to graft a diffrent one since healing itself will not regrow it. Through extensive healing processes, a grafted limb may eventually come to look and function like your original. True regrowth is possible, but extremely difficult to achieve.</p>
+
       <h3>Final Blow</h3>
-      <p>Any creature adjacent to an Unconscious target may spend 1 Action to deliver a Final Blow instead of a normal attack. No roll required, it hits automatically and kills the target outright.</p>
+      <p>Any creature adjacent to an Unconscious target may spend 1 Action to deliver a Final Blow instead of a normal attack. No roll required, it hits automatically.</p>
+
+      <h3>Final Blow Resistance</h3>
+      <p>Each character can resist 4 Final Blows before dying (Narrator rulings may adjust this number). Each Final Blow that connects reduces this by 1. At 0 remaining, death is triggered.</p>
+
+      <h3>Undead Transformation</h3>
+      <p>When death is triggered, before it becomes permanent, the character undergoes a special check (details withheld for now). Pass: the character survives, but gains the Undead condition and becomes Hollowed. Fail: permanent character death.</p>
+
+      <h3>Hollowing Check</h3>
+      <p>Once per in-game day, a Hollowed character rolls 2d8 (no modifier) against Challenge Score 10, escalating over time the longer they remain Hollowed. Fail: the character permanently loses their mind, this is character death. Pass: the character remains playable until the next day's check. A cure for Hollowing exists but is rare and impractical to pursue.</p>
+
+      <h2 id="rests" class="section-title">Rests</h2>
+      <ul>
+      <li>Rest (10+ min): rest at least 10 minutes to gain benefits, up to 4 hours. For each hour rested (including the first 10 minutes), regain Health equal to your Level. Regain Active trait uses.</li>
+      <li>Sleep (8 hrs): an extended rest, character does not act. Sleep 6+ hours: fully recover Health and Mana, or reduce Fatigue by 1 instead if you have any. Sleep 4+ hours: recover half Health and Mana. Sleep less than 4 hours: no recovery. Any sleep prevents Fatigue gain.</li>
+      <li>Fatigue: -2 to all rolls per stack, stacking. Level 6 Fatigue without sleeping is fatal.</li>
+      </ul>
 
     </section>
   </main>
