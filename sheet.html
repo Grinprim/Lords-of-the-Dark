@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Character Sheet - Lords of the Dark</title>
+<style>
+:root {
+  --bg: #faf5ea;
+  --ink: #241b12;
+  --muted: #8a7a63;
+  --line: #7a2323;
+  --line-soft: #c9b98f;
+  --field-bg: #fffdf8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  padding: 20px 14px 60px;
+}
+.page { max-width: 980px; margin: 0 auto; }
+
+input, textarea {
+  font-family: inherit;
+  background: var(--field-bg);
+  border: 1px solid var(--line-soft);
+  border-radius: 3px;
+  color: var(--ink);
+  padding: 2px 5px;
+}
+input[type="number"] { text-align: center; -moz-appearance: textfield; }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+textarea { width: 100%; resize: vertical; }
+
+/* HEADER */
+.header-row { display: flex; gap: 16px; align-items: stretch; flex-wrap: wrap; }
+.header-left { flex: 1 1 300px; display: flex; gap: 22px; align-items: flex-end; flex-wrap: wrap; padding-bottom: 6px; }
+.header-field { display: flex; flex-direction: column; }
+.header-field label { font-size: 0.7rem; font-weight: bold; color: var(--line); text-transform: uppercase; }
+.header-field input { border: none; border-bottom: 1px solid var(--ink); background: transparent; border-radius: 0; min-width: 170px; }
+.header-field.small input { min-width: 50px; text-align: center; }
+
+.vitals-box { display: flex; border: 2px solid var(--line); border-radius: 3px; }
+.vslot { flex: 1; text-align: center; padding: 6px 12px; border-left: 1px solid var(--line-soft); min-width: 70px; }
+.vslot:first-child { border-left: none; }
+.vslot .vtitle { font-size: 0.68rem; font-weight: bold; color: var(--line); text-transform: uppercase; letter-spacing: 0.03em; }
+.vslot .vval { font-size: 1.15rem; margin: 3px 0; }
+.vslot .vval input.frac { width: 26px; border: none; background: transparent; text-align: center; font-size: 1.05rem; padding: 0; }
+.vslot .vval .single { font-weight: bold; }
+.vslot .vformula { font-size: 0.62rem; color: var(--muted); font-style: italic; }
+.vbonus { margin-top: 4px; display: flex; flex-direction: column; align-items: center; gap: 1px; }
+.vbonus input {
+  width: 32px; height: 18px; border-radius: 9px; text-align: center;
+  font-size: 0.72rem; padding: 0; border: 1px solid var(--line-soft);
+}
+.vbonus label { font-size: 0.55rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+
+hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16px; }
+
+/* MAIN 3 COLUMN */
+.main-3col { display: grid; grid-template-columns: 190px 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .main-3col { grid-template-columns: 1fr; } }
+
+.col-title { font-size: 0.85rem; font-weight: bold; color: var(--line); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+
+/* ATTRIBUTES */
+.attr-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; }
+.attr-slot label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 4px; text-align: center; }
+.attr-slot input { width: 100%; height: 62px; font-size: 1.4rem; }
+
+.grace-box { border: 1px solid var(--line); border-radius: 4px; padding: 10px 8px; text-align: center; margin-top: 14px; }
+.grace-box .gtitle { font-size: 0.72rem; font-weight: bold; color: var(--line); text-transform: uppercase; letter-spacing: 0.04em; }
+.grace-meter { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin: 8px 4px; }
+.pip-sq {
+  width: 18px; height: 18px; border-radius: 4px;
+  border: 1.5px solid var(--line); cursor: pointer;
+  background: var(--field-bg);
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+.pip-sq:hover { transform: scale(1.1); }
+.pip-sq.filled { background: var(--line); }
+.grace-box .gcaption { font-size: 0.66rem; color: var(--muted); font-style: italic; }
+
+/* GEAR CARDS */
+.gear-card { border: 1px solid var(--line-soft); border-radius: 4px; padding: 5px 7px; margin-bottom: 8px; position: relative; }
+.gear-row1 { display: flex; gap: 8px; align-items: center; }
+.gear-row1 .name-field { flex: 1; }
+.gear-row1 .weight-field { width: 54px; }
+.gear-row1 label, .gear-row2 label { display: block; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; margin-bottom: 1px; }
+.gear-row1 input, .gear-row2 input { width: 100%; height: 22px; padding: 1px 5px; font-size: 0.8rem; }
+.gear-row2 { display: grid; gap: 6px; margin-top: 3px; }
+.gear-row2.cols-1 { grid-template-columns: 1fr; }
+.gear-row2.cols-2 { grid-template-columns: 1fr 1fr; }
+.gear-row2.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.gear-notes { margin-top: 3px; }
+.gear-notes label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 1px; }
+.gear-notes input { width: 100%; height: 22px; padding: 1px 5px; font-size: 0.8rem; }
+.gear-remove {
+  position: absolute; top: 4px; right: 6px; background: none; border: none;
+  color: var(--muted); cursor: pointer; font-size: 0.85rem; line-height: 1;
+}
+.gear-remove:hover { color: var(--ink); }
+
+.add-row-btn {
+  font-family: inherit; font-size: 0.7rem; margin-top: 2px; margin-bottom: 10px;
+  background: transparent; border: 1px solid var(--line-soft); border-radius: 3px;
+  padding: 2px 8px; cursor: pointer; color: var(--muted); display: inline-block;
+}
+.add-row-btn:hover { color: var(--ink); border-color: var(--line); }
+
+/* ARTIFACT SLOTS */
+.artifact-title { font-size: 0.8rem; font-weight: bold; color: var(--line); text-transform: uppercase; margin: 10px 0 6px; }
+.artifact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+/* WEIGHT FOOTER */
+.weight-footer-top {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.weight-footer-top .wt-numbers { font-size: 0.75rem; white-space: nowrap; }
+.weight-footer-top .band-tag { font-weight: bold; padding: 0px 8px; border-radius: 8px; border: 1px solid var(--line); font-size: 0.68rem; white-space: nowrap; }
+.weight-bar-track {
+  flex: 1; height: 9px; border-radius: 6px; overflow: hidden;
+  border: 1px solid var(--line); background: var(--field-bg);
+}
+.weight-bar-fill { height: 100%; transition: width 0.2s ease, background-color 0.2s ease; }
+
+/* CONDITIONS + TRAITS (below) */
+.box { border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px 10px; margin-top: 16px; }
+.box > .box-title { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: bold; color: var(--line); margin-bottom: 6px; }
+.traits-box textarea { min-height: 90px; border: none; }
+
+.cond-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; }
+.cond-box { border: 1px solid var(--line-soft); border-radius: 4px; padding: 6px 8px; }
+.cond-box .cname { font-size: 0.78rem; font-weight: bold; }
+.cond-box .meter { display: flex; gap: 3px; flex-wrap: wrap; margin-top: 4px; }
+.cond-threshold { font-size: 0.7rem; color: var(--muted); margin-bottom: 8px; }
+.hollow-toggle { display: flex; gap: 10px; align-items: center; font-size: 0.8rem; }
+.hollow-toggle label { display: flex; align-items: center; gap: 4px; }
+
+.rules-footer { font-size: 0.7rem; color: var(--muted); font-style: italic; border-top: 1px solid var(--line-soft); margin-top: 16px; padding-top: 8px; }
+.rules-footer b { color: var(--ink); font-style: normal; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header-row">
+    <div class="header-left">
+      <div class="header-field"><label>Character Name</label><input type="text"></div>
+      <div class="header-field"><label>Species</label><input type="text"></div>
+      <div class="header-field small"><label>Level</label><input id="level" type="number" placeholder="1" min="1" oninput="recalc()"></div>
+    </div>
+    <div class="vitals-box">
+      <div class="vslot">
+        <div class="vtitle">HP</div>
+        <div class="vval"><input class="frac" id="hpCurrent" type="number" placeholder="0"> / <span id="hpMax">8</span></div>
+        <div class="vbonus"><input type="number" id="hpBonus" placeholder="0" oninput="recalc()"><label>Bonus</label></div>
+      </div>
+      <div class="vslot">
+        <div class="vtitle">Armor</div>
+        <div class="vval"><span class="single" id="armorVal">6</span></div>
+        <div class="vbonus"><input type="number" id="armorBonus" placeholder="0" oninput="recalc()"><label>Bonus</label></div>
+      </div>
+      <div class="vslot">
+        <div class="vtitle">Mana</div>
+        <div class="vval"><input class="frac" id="manaCurrent" type="number" placeholder="0"> / <span id="manaMax">1</span></div>
+        <div class="vbonus"><input type="number" id="manaBonus" placeholder="0" oninput="recalc()"><label>Bonus</label></div>
+      </div>
+      <div class="vslot">
+        <div class="vtitle">Speed</div>
+        <div class="vval"><span class="single" id="speedVal">6</span></div>
+        <div class="vbonus"><input type="number" id="speedBonus" placeholder="0" oninput="recalc()"><label>Bonus</label></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="weight-footer-top">
+    <span class="wt-numbers">Weight: <b id="totalWeight">0</b>/<b id="maxWeight">1</b></span>
+    <div class="weight-bar-track">
+      <div class="weight-bar-fill" id="weightBarFill" style="width:0%; background:#4a8c4a;"></div>
+    </div>
+    <span class="band-tag" id="bandTag">Light</span>
+  </div>
+
+  <div class="main-3col">
+    <!-- ATTRIBUTES -->
+    <div>
+      <div class="col-title">Attributes</div>
+      <div class="attr-pairs">
+        <div class="attr-slot"><label>Vigor</label><input id="vigor" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Fortitude</label><input id="fortitude" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Strength</label><input id="strength" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Dexterity</label><input id="dexterity" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Intelligence</label><input id="intelligence" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Arcane</label><input id="arcane" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Charisma</label><input id="charisma" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Reflex</label><input id="reflex" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Insight</label><input id="insight" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-slot"><label>Awareness</label><input id="awareness" type="number" placeholder="0" oninput="recalc()"></div>
+      </div>
+
+      <div class="grace-box">
+        <div class="gtitle">Grace</div>
+        <div class="grace-meter" id="gracePips"></div>
+        <div class="gcaption">+1 per failure. Max 8.</div>
+      </div>
+    </div>
+
+    <!-- DEFENSIVE GEAR -->
+    <div>
+      <div class="col-title">Defensive Gear</div>
+
+      <div class="gear-card">
+        <div class="gear-row1">
+          <div class="name-field"><label>Armor Name</label><input></div>
+          <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+        </div>
+        <div class="gear-row2 cols-2">
+          <div><label>REQ</label><input></div>
+          <div><label>Armor</label><input type="number"></div>
+        </div>
+        <div class="gear-notes"><label>Notes</label><input></div>
+      </div>
+
+      <div class="gear-card">
+        <div class="gear-row1">
+          <div class="name-field"><label>Shield Name</label><input></div>
+          <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+        </div>
+        <div class="gear-row2 cols-2">
+          <div><label>REQ</label><input></div>
+          <div><label>Armor/Bonus</label><input></div>
+        </div>
+        <div class="gear-notes"><label>Notes</label><input></div>
+      </div>
+
+      <div class="gear-card">
+        <div class="gear-row1">
+          <div class="name-field"><label>Cloak/Misc Name</label><input></div>
+          <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+        </div>
+        <div class="gear-row2 cols-2">
+          <div><label>REQ</label><input></div>
+          <div><label>Stats</label><input></div>
+        </div>
+        <div class="gear-notes"><label>Notes</label><input></div>
+      </div>
+
+      <div class="artifact-title">Artifact Slots</div>
+      <div class="artifact-row" id="artifactGrid">
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div class="name-field"><label>Artifact 1</label><input></div>
+            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-row2 cols-1">
+            <div><label>REQ</label><input></div>
+          </div>
+          <div class="gear-notes"><label>Notes</label><input></div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div class="name-field"><label>Artifact 2</label><input></div>
+            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-row2 cols-1">
+            <div><label>REQ</label><input></div>
+          </div>
+          <div class="gear-notes"><label>Notes</label><input></div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div class="name-field"><label>Artifact 3</label><input></div>
+            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-row2 cols-1">
+            <div><label>REQ</label><input></div>
+          </div>
+          <div class="gear-notes"><label>Notes</label><input></div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div class="name-field"><label>Artifact 4</label><input></div>
+            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-row2 cols-1">
+            <div><label>REQ</label><input></div>
+          </div>
+          <div class="gear-notes"><label>Notes</label><input></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEAPONS / CATALYST -->
+    <div>
+      <div class="col-title">Weapons / Catalyst</div>
+      <div id="weaponCards">
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div class="name-field"><label>Primary Weapon/Staff</label><input></div>
+            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-row2 cols-3">
+            <div><label>REQ</label><input></div>
+            <div><label>Attack</label><input type="number"></div>
+            <div><label>Damage</label><input type="number"></div>
+          </div>
+          <div class="gear-notes"><label>Notes (Crit, Scaling)</label><input></div>
+        </div>
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div class="name-field"><label>Secondary Weapon</label><input></div>
+            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-row2 cols-3">
+            <div><label>REQ</label><input></div>
+            <div><label>Attack</label><input type="number"></div>
+            <div><label>Damage</label><input type="number"></div>
+          </div>
+          <div class="gear-notes"><label>Notes</label><input></div>
+        </div>
+      </div>
+      <button class="add-row-btn" onclick="addWeaponCard()">+ Add Weapon</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+var hpTable = {1:8,2:10,3:12,4:14,5:16,6:18,7:20,8:22,9:24,10:26,11:28,12:30,13:32,14:34,15:36,16:38};
+
+function getInt(id) {
+  var el = document.getElementById(id);
+  var v = parseInt(el.value, 10);
+  return isNaN(v) ? 0 : v;
+}
+
+function recalc() {
+  var level = Math.max(1, getInt('level'));
+  var vigor = getInt('vigor');
+  var fortitude = getInt('fortitude');
+  var strength = getInt('strength');
+  var intelligence = getInt('intelligence');
+  var arcane = getInt('arcane');
+
+  var baseHp = hpTable[Math.min(level,16)] || 8;
+  if (level > 16) { baseHp += (level - 16) * 2; }
+  document.getElementById('hpMax').textContent = baseHp + (vigor * level) + getInt('hpBonus');
+
+  document.getElementById('armorVal').textContent = 6 + fortitude + getInt('armorBonus');
+  document.getElementById('manaMax').textContent = level + intelligence + arcane + getInt('manaBonus');
+
+  var maxWeight = Math.max(1, level + strength);
+  document.getElementById('maxWeight').textContent = maxWeight;
+
+  recalcWeight();
+}
+
+function recalcWeight() {
+  var weights = document.querySelectorAll('.gear-weight');
+  var total = 0;
+  weights.forEach(function(w) {
+    var v = parseFloat(w.value);
+    if (!isNaN(v)) total += v;
+  });
+  document.getElementById('totalWeight').textContent = total;
+
+  var maxWeight = parseFloat(document.getElementById('maxWeight').textContent) || 1;
+  var pct = total / maxWeight;
+  var fill = document.getElementById('weightBarFill');
+  var band = document.getElementById('bandTag');
+  var speedMod = 0;
+  var widthPct = Math.min(100, pct * 100);
+  fill.style.width = widthPct + '%';
+
+  if (pct >= 1) {
+    fill.style.backgroundColor = '#b13a3a';
+    band.textContent = 'Overloaded';
+    speedMod = -6;
+  } else if (pct > 0.75) {
+    fill.style.backgroundColor = '#c99a3a';
+    band.textContent = 'Heavy';
+    speedMod = -1;
+  } else if (pct >= 0.5) {
+    fill.style.backgroundColor = '#3b6fa3';
+    band.textContent = 'Medium';
+    speedMod = 0;
+  } else {
+    fill.style.backgroundColor = '#4a8c4a';
+    band.textContent = 'Light';
+    speedMod = 1;
+  }
+
+  document.getElementById('speedVal').textContent = Math.max(0, 6 + speedMod + getInt('speedBonus'));
+}
+
+function addWeaponCard() {
+  var container = document.getElementById('weaponCards');
+  var card = document.createElement('div');
+  card.className = 'gear-card';
+  card.innerHTML =
+    '<button class="gear-remove" onclick="this.parentElement.remove(); recalcWeight();">&times;</button>' +
+    '<div class="gear-row1">' +
+      '<div class="name-field"><label>Weapon</label><input></div>' +
+      '<div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>' +
+    '</div>' +
+    '<div class="gear-row2 cols-3">' +
+      '<div><label>REQ</label><input></div>' +
+      '<div><label>Attack</label><input type="number"></div>' +
+      '<div><label>Damage</label><input type="number"></div>' +
+    '</div>' +
+    '<div class="gear-notes"><label>Notes</label><input></div>';
+  container.appendChild(card);
+}
+
+function buildPipMeter(container, count) {
+  container.innerHTML = '';
+  for (var i = 0; i < count; i++) {
+    var p = document.createElement('div');
+    p.className = 'pip-sq';
+    p.onclick = (function(el) { return function() { el.classList.toggle('filled'); }; })(p);
+    container.appendChild(p);
+  }
+}
+
+function buildFillMeter(container, count) {
+  container.innerHTML = '';
+  var pips = [];
+  for (var i = 0; i < count; i++) {
+    var p = document.createElement('div');
+    p.className = 'pip-sq';
+    pips.push(p);
+    container.appendChild(p);
+  }
+  pips.forEach(function(p, idx) {
+    p.onclick = function() {
+      pips.forEach(function(pp, i2) {
+        if (i2 <= idx) { pp.classList.add('filled'); }
+        else { pp.classList.remove('filled'); }
+      });
+    };
+  });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  buildFillMeter(document.getElementById('gracePips'), 8);
+  recalc();
+});
+</script>
+</body>
+</html>
