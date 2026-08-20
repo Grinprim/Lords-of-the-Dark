@@ -6,33 +6,34 @@
 <title>Character Sheet - Lords of the Dark</title>
 <style>
 :root {
-  --bg: #f8f3e6;
+  --bg: #f6f2e8;
   --ink: #1f1a14;
   --red: #8f1023;
-  --line: #d7be91;
-  --field-bg: #fffefb;
+  --line: #d9c39b;
+  --field-bg: #fbfbfb;
+  --field-line: #d8dbe0;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 28px 18px 48px;
+  padding: 26px 16px 40px;
   background: var(--bg);
   color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
 }
 .page {
-  max-width: 1180px;
+  max-width: 1020px;
   margin: 0 auto;
 }
 
 input, textarea {
   width: 100%;
   font-family: inherit;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: var(--ink);
   background: var(--field-bg);
-  border: 1px solid #e2d3b3;
-  padding: 2px 5px;
+  border: 1px solid var(--field-line);
+  padding: 1px 4px;
 }
 input[type="number"] { text-align: center; -moz-appearance: textfield; }
 input[type="number"]::-webkit-inner-spin-button,
@@ -41,25 +42,25 @@ textarea { resize: vertical; }
 
 label {
   display: block;
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--red);
   font-weight: 700;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .header {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 16px;
+  gap: 14px;
   align-items: end;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .header-fields {
   display: grid;
   grid-template-columns: 1fr 1fr 84px;
-  gap: 14px;
+  gap: 10px;
 }
 .header-fields input {
   border: none;
@@ -75,10 +76,10 @@ label {
   border: 2px solid var(--red);
 }
 .vital {
-  min-width: 94px;
+  min-width: 78px;
   text-align: center;
-  border-left: 1px solid #d6c19f;
-  padding: 6px 8px 4px;
+  border-left: 1px solid #d9c4a5;
+  padding: 4px 7px 3px;
 }
 .vital:first-child { border-left: none; }
 .vital .title {
@@ -88,40 +89,40 @@ label {
   font-weight: 700;
 }
 .vital .value {
-  margin: 3px 0 4px;
-  font-size: 2rem;
+  margin: 1px 0 2px;
+  font-size: 2.25rem;
   line-height: 1;
   font-weight: 700;
 }
 .vital .value.single { font-size: 2.1rem; }
 .vital .frac {
-  width: 32px;
+  width: 30px;
   border: none;
   background: transparent;
-  font-size: 2rem;
+  font-size: 2.2rem;
   padding: 0;
 }
 .vital .bonus {
-  width: 64px;
-  height: 18px;
-  border-radius: 10px;
-  font-size: 0.63rem;
+  width: 54px;
+  height: 16px;
+  border-radius: 9px;
+  font-size: 0.55rem;
   padding: 0;
   text-transform: uppercase;
 }
 
 .sheet-grid {
   display: grid;
-  grid-template-columns: 156px 1fr;
-  gap: 14px;
+  grid-template-columns: 154px 1fr;
+  gap: 10px;
 }
 
 .section-title {
   color: var(--red);
-  font-size: 1.85rem;
-  line-height: 0.9;
+  font-size: 1.9rem;
+  line-height: 0.82;
   text-transform: uppercase;
-  margin: 6px 0 8px;
+  margin: 7px 0 6px;
 }
 
 .left-col .section-title { margin-top: 10px; }
@@ -129,10 +130,10 @@ label {
 .attr-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px 12px;
+  gap: 8px 12px;
 }
 .attr-box input {
-  height: 52px;
+  height: 50px;
   font-size: 2rem;
   border: 2px solid #ddc395;
 }
@@ -140,9 +141,9 @@ label {
 .grace-box,
 .weight-box {
   border: 2px solid var(--red);
-  padding: 8px 8px;
+  padding: 8px 7px;
   text-align: center;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 .mini-title {
   color: var(--red);
@@ -155,10 +156,10 @@ label {
   grid-template-columns: repeat(8, 1fr);
   gap: 0;
   border: 1px solid var(--red);
-  margin: 8px 6px 5px;
+  margin: 7px 6px 4px;
 }
 .pip-sq {
-  height: 14px;
+  height: 13px;
   border-right: 1px solid var(--red);
   background: var(--field-bg);
   cursor: pointer;
@@ -181,46 +182,43 @@ label {
 .gear-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  gap: 10px;
 }
 
-.card-stack { display: grid; gap: 10px; }
+.card-stack { display: grid; gap: 8px; }
 
 .gear-card {
-  border: 2px solid var(--line);
-  padding: 6px;
+  border: 1.5px solid var(--line);
+  padding: 5px;
 }
 .gear-row1 {
   display: grid;
-  grid-template-columns: 1fr 64px;
-  gap: 6px;
+  grid-template-columns: 1fr 50px;
+  gap: 4px;
 }
 .gear-row2 {
-  margin-top: 4px;
+  margin-top: 2px;
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 .gear-row2.cols-1 { grid-template-columns: 1fr; }
 .gear-row2.cols-2 { grid-template-columns: 1fr 1fr; }
 .gear-row2.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
 .gear-card input, .gear-card textarea {
-  height: 20px;
-  font-size: 0.75rem;
+  height: 18px;
+  font-size: 0.68rem;
 }
-.gear-notes { margin-top: 4px; }
-.gear-notes textarea {
-  min-height: 24px;
-  resize: none;
-}
+.gear-notes { margin-top: 2px; }
+.gear-notes input { height: 18px; }
 
 .notes-title {
   margin-top: 8px;
   margin-bottom: 6px;
 }
 .notes-box {
-  min-height: 220px;
-  border: 2px solid var(--line);
-  padding: 8px;
+  min-height: 190px;
+  border: 1.5px solid var(--line);
+  padding: 7px;
 }
 
 .artifact-title {
@@ -231,11 +229,11 @@ label {
   margin: 12px 0 6px;
 }
 .artifact-row {
-  border: 2px solid var(--line);
-  padding: 6px;
+  border: 1.5px solid var(--line);
+  padding: 5px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 6px;
 }
 .artifact-row .gear-card { border-width: 1px; }
 
@@ -327,11 +325,10 @@ label {
                 <div><label>Armor Name</label><input></div>
                 <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
               </div>
-              <div class="gear-row2 cols-2">
-                <div><label>REQ</label><input></div>
+              <div class="gear-row2 cols-1">
                 <div><label>Armor</label><input type="number"></div>
               </div>
-              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+              <div class="gear-notes"><label>Notes</label><input></div>
             </div>
 
             <div class="gear-card">
@@ -339,11 +336,10 @@ label {
                 <div><label>Shield Name</label><input></div>
                 <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
               </div>
-              <div class="gear-row2 cols-2">
-                <div><label>REQ</label><input></div>
+              <div class="gear-row2 cols-1">
                 <div><label>Armor/Bonus</label><input></div>
               </div>
-              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+              <div class="gear-notes"><label>Notes</label><input></div>
             </div>
 
             <div class="gear-card">
@@ -351,11 +347,10 @@ label {
                 <div><label>Cloak/Misc</label><input></div>
                 <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
               </div>
-              <div class="gear-row2 cols-2">
-                <div><label>REQ</label><input></div>
+              <div class="gear-row2 cols-1">
                 <div><label>Stats</label><input></div>
               </div>
-              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+              <div class="gear-notes"><label>Notes</label><input></div>
             </div>
           </div>
         </div>
@@ -368,12 +363,11 @@ label {
                 <div><label>Weapon</label><input></div>
                 <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
               </div>
-              <div class="gear-row2 cols-3">
-                <div><label>REQ</label><input></div>
+              <div class="gear-row2 cols-2">
                 <div><label>ATK</label><input type="number"></div>
                 <div><label>DMG</label><input type="number"></div>
               </div>
-              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+              <div class="gear-notes"><label>Notes</label><input></div>
             </div>
 
             <div class="gear-card">
@@ -381,12 +375,11 @@ label {
                 <div><label>Weapon</label><input></div>
                 <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
               </div>
-              <div class="gear-row2 cols-3">
-                <div><label>REQ</label><input></div>
+              <div class="gear-row2 cols-2">
                 <div><label>ATK</label><input type="number"></div>
                 <div><label>DMG</label><input type="number"></div>
               </div>
-              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+              <div class="gear-notes"><label>Notes</label><input></div>
             </div>
 
             <div class="gear-card">
@@ -394,12 +387,11 @@ label {
                 <div><label>Weapon</label><input></div>
                 <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
               </div>
-              <div class="gear-row2 cols-3">
-                <div><label>REQ</label><input></div>
+              <div class="gear-row2 cols-2">
                 <div><label>ATK</label><input type="number"></div>
                 <div><label>DMG</label><input type="number"></div>
               </div>
-              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+              <div class="gear-notes"><label>Notes</label><input></div>
             </div>
           </div>
         </div>
@@ -415,7 +407,7 @@ label {
             <div><label>Art 1</label><input></div>
             <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+          <div class="gear-notes"><label>Notes</label><input></div>
         </div>
 
         <div class="gear-card">
@@ -423,7 +415,7 @@ label {
             <div><label>Art 2</label><input></div>
             <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+          <div class="gear-notes"><label>Notes</label><input></div>
         </div>
 
         <div class="gear-card">
@@ -431,7 +423,7 @@ label {
             <div><label>Art 3</label><input></div>
             <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+          <div class="gear-notes"><label>Notes</label><input></div>
         </div>
 
         <div class="gear-card">
@@ -439,7 +431,7 @@ label {
             <div><label>Art 4</label><input></div>
             <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+          <div class="gear-notes"><label>Notes</label><input></div>
         </div>
       </div>
     </div>
