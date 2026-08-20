@@ -90,23 +90,23 @@ label {
 }
 .vital .value {
   margin: 1px 0 2px;
-  font-size: 2.25rem;
+  font-size: 1.55rem;
   line-height: 1;
   font-weight: 700;
 }
-.vital .value.single { font-size: 2.1rem; }
+.vital .value.single { font-size: 1.45rem; }
 .vital .frac {
-  width: 30px;
+  width: 24px;
   border: none;
   background: transparent;
-  font-size: 2.2rem;
+  font-size: 1.45rem;
   padding: 0;
 }
 .vital .bonus {
-  width: 54px;
-  height: 16px;
+  width: 40px;
+  height: 14px;
   border-radius: 9px;
-  font-size: 0.55rem;
+  font-size: 0.5rem;
   padding: 0;
   text-transform: uppercase;
 }
@@ -119,10 +119,10 @@ label {
 
 .section-title {
   color: var(--red);
-  font-size: 1.9rem;
-  line-height: 0.82;
+  font-size: 0.95rem;
+  line-height: 1;
   text-transform: uppercase;
-  margin: 7px 0 6px;
+  margin: 5px 0 6px;
 }
 
 .left-col .section-title { margin-top: 10px; }
@@ -133,8 +133,8 @@ label {
   gap: 8px 12px;
 }
 .attr-box input {
-  height: 50px;
-  font-size: 2rem;
+  height: 38px;
+  font-size: 1.5rem;
   border: 2px solid #ddc395;
 }
 
@@ -147,7 +147,7 @@ label {
 }
 .mini-title {
   color: var(--red);
-  font-size: 0.9rem;
+  font-size: 0.74rem;
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -171,8 +171,8 @@ label {
   color: #5a4f40;
   font-style: italic;
 }
-.weight-box .wval { font-size: 2.05rem; margin: 5px 0 2px; font-weight: 700; }
-.weight-box .wstatus { font-size: 0.72rem; text-transform: uppercase; color: #5a4f40; }
+.weight-box .wval { font-size: 1.45rem; margin: 5px 0 2px; font-weight: 700; }
+.weight-box .wstatus { font-size: 0.68rem; text-transform: uppercase; color: #5a4f40; }
 
 .right-area {
   display: grid;
@@ -223,10 +223,10 @@ label {
 
 .artifact-title {
   color: var(--red);
-  font-size: 1.85rem;
-  line-height: 0.9;
+  font-size: 0.9rem;
+  line-height: 1;
   text-transform: uppercase;
-  margin: 12px 0 6px;
+  margin: 10px 0 6px;
 }
 .artifact-row {
   border: 1.5px solid var(--line);
@@ -510,8 +510,10 @@ function buildFillMeter(container, count) {
   }
   pips.forEach(function(p, idx) {
     p.onclick = function() {
+      var shouldClear = p.classList.contains('filled') && (idx === pips.length - 1 || !pips[idx + 1].classList.contains('filled'));
+      var fillUntil = shouldClear ? idx - 1 : idx;
       pips.forEach(function(pp, i2) {
-        if (i2 <= idx) { pp.classList.add('filled'); }
+        if (i2 <= fillUntil) { pp.classList.add('filled'); }
         else { pp.classList.remove('filled'); }
       });
     };
