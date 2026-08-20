@@ -114,7 +114,7 @@ hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16p
 
 /* ARTIFACT SLOTS */
 .artifact-title { font-size: 0.8rem; font-weight: bold; color: var(--line); text-transform: uppercase; margin: 10px 0 6px; }
-.artifact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.artifact-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 
 /* WEIGHT FOOTER */
 .weight-footer-top {
@@ -127,6 +127,11 @@ hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16p
   border: 1px solid var(--line); background: var(--field-bg);
 }
 .weight-bar-fill { height: 100%; transition: width 0.2s ease, background-color 0.2s ease; }
+
+.weight-mini { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+.weight-mini .wt-numbers { font-size: 0.68rem; white-space: nowrap; }
+.weight-mini .weight-bar-track { flex: 1; height: 7px; }
+.weight-mini .band-tag { font-weight: bold; padding: 0 6px; border-radius: 7px; border: 1px solid var(--line); font-size: 0.6rem; white-space: nowrap; }
 
 /* CONDITIONS + TRAITS (below) */
 .box { border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px 10px; margin-top: 16px; }
@@ -295,6 +300,12 @@ hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16p
           <div class="gear-notes"><label>Notes</label><input></div>
         </div>
       </div>
+
+      <div class="weight-mini">
+        <span class="wt-numbers">Wt: <b id="totalWeight2">0</b>/<b id="maxWeight2">1</b></span>
+        <div class="weight-bar-track"><div class="weight-bar-fill" id="weightBarFill2" style="width:0%; background:#4a8c4a;"></div></div>
+        <span class="band-tag" id="bandTag2">Light</span>
+      </div>
     </div>
 
     <!-- WEAPONS / CATALYST -->
@@ -303,7 +314,7 @@ hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16p
       <div id="weaponCards">
         <div class="gear-card">
           <div class="gear-row1">
-            <div class="name-field"><label>Primary Weapon/Staff</label><input></div>
+            <div class="name-field"><label>Weapon</label><input></div>
             <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
           <div class="gear-row2 cols-3">
@@ -315,7 +326,7 @@ hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16p
         </div>
         <div class="gear-card">
           <div class="gear-row1">
-            <div class="name-field"><label>Secondary Weapon</label><input></div>
+            <div class="name-field"><label>Weapon</label><input></div>
             <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
           <div class="gear-row2 cols-3">
@@ -326,7 +337,7 @@ hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16p
           <div class="gear-notes"><label>Notes</label><input></div>
         </div>
       </div>
-      <button class="add-row-btn" onclick="addWeaponCard()">+ Add Weapon</button>
+      <button class="add-row-btn" id="addWeaponBtn" onclick="addWeaponCard()">+ Add Weapon</button>
     </div>
   </div>
 
@@ -370,42 +381,40 @@ function recalcWeight() {
     if (!isNaN(v)) total += v;
   });
   document.getElementById('totalWeight').textContent = total;
+  document.getElementById('totalWeight2').textContent = total;
 
   var maxWeight = parseFloat(document.getElementById('maxWeight').textContent) || 1;
+  document.getElementById('maxWeight2').textContent = maxWeight;
   var pct = total / maxWeight;
-  var fill = document.getElementById('weightBarFill');
-  var band = document.getElementById('bandTag');
+  var fills = [document.getElementById('weightBarFill'), document.getElementById('weightBarFill2')];
+  var bands = [document.getElementById('bandTag'), document.getElementById('bandTag2')];
   var speedMod = 0;
   var widthPct = Math.min(100, pct * 100);
-  fill.style.width = widthPct + '%';
+  fills.forEach(function(f) { f.style.width = widthPct + '%'; });
 
+  var color, label;
   if (pct >= 1) {
-    fill.style.backgroundColor = '#b13a3a';
-    band.textContent = 'Overloaded';
-    speedMod = -6;
+    color = '#b13a3a'; label = 'Overloaded'; speedMod = -6;
   } else if (pct > 0.75) {
-    fill.style.backgroundColor = '#c99a3a';
-    band.textContent = 'Heavy';
-    speedMod = -1;
+    color = '#c99a3a'; label = 'Heavy'; speedMod = -1;
   } else if (pct >= 0.5) {
-    fill.style.backgroundColor = '#3b6fa3';
-    band.textContent = 'Medium';
-    speedMod = 0;
+    color = '#3b6fa3'; label = 'Medium'; speedMod = 0;
   } else {
-    fill.style.backgroundColor = '#4a8c4a';
-    band.textContent = 'Light';
-    speedMod = 1;
+    color = '#4a8c4a'; label = 'Light'; speedMod = 1;
   }
+  fills.forEach(function(f) { f.style.backgroundColor = color; });
+  bands.forEach(function(b) { b.textContent = label; });
 
   document.getElementById('speedVal').textContent = Math.max(0, 6 + speedMod + getInt('speedBonus'));
 }
 
 function addWeaponCard() {
   var container = document.getElementById('weaponCards');
+  if (container.children.length >= 3) return;
   var card = document.createElement('div');
   card.className = 'gear-card';
   card.innerHTML =
-    '<button class="gear-remove" onclick="this.parentElement.remove(); recalcWeight();">&times;</button>' +
+    '<button class="gear-remove" onclick="removeWeaponCard(this)">&times;</button>' +
     '<div class="gear-row1">' +
       '<div class="name-field"><label>Weapon</label><input></div>' +
       '<div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>' +
@@ -417,6 +426,19 @@ function addWeaponCard() {
     '</div>' +
     '<div class="gear-notes"><label>Notes</label><input></div>';
   container.appendChild(card);
+  updateAddWeaponBtn();
+}
+
+function removeWeaponCard(btn) {
+  btn.parentElement.remove();
+  recalcWeight();
+  updateAddWeaponBtn();
+}
+
+function updateAddWeaponBtn() {
+  var container = document.getElementById('weaponCards');
+  var btn = document.getElementById('addWeaponBtn');
+  btn.style.display = container.children.length >= 3 ? 'none' : 'inline-block';
 }
 
 function buildPipMeter(container, count) {
@@ -450,6 +472,7 @@ function buildFillMeter(container, count) {
 
 document.addEventListener('DOMContentLoaded', function() {
   buildFillMeter(document.getElementById('gracePips'), 8);
+  updateAddWeaponBtn();
   recalc();
 });
 </script>
