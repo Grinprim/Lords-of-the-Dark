@@ -6,310 +6,441 @@
 <title>Character Sheet - Lords of the Dark</title>
 <style>
 :root {
-  --bg: #faf5ea;
-  --ink: #241b12;
-  --muted: #8a7a63;
-  --line: #7a2323;
-  --line-soft: #c9b98f;
-  --field-bg: #fffdf8;
+  --bg: #f8f3e6;
+  --ink: #1f1a14;
+  --red: #8f1023;
+  --line: #d7be91;
+  --field-bg: #fffefb;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
+  padding: 28px 18px 48px;
   background: var(--bg);
   color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
-  padding: 20px 14px 60px;
 }
-.page { max-width: 980px; margin: 0 auto; }
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+}
 
 input, textarea {
+  width: 100%;
   font-family: inherit;
-  background: var(--field-bg);
-  border: 1px solid var(--line-soft);
-  border-radius: 3px;
+  font-size: 0.8rem;
   color: var(--ink);
+  background: var(--field-bg);
+  border: 1px solid #e2d3b3;
   padding: 2px 5px;
 }
 input[type="number"] { text-align: center; -moz-appearance: textfield; }
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-textarea { width: 100%; resize: vertical; }
+textarea { resize: vertical; }
 
-/* HEADER */
-.header-row { display: flex; gap: 16px; align-items: stretch; flex-wrap: wrap; }
-.header-left { flex: 1 1 300px; display: flex; gap: 22px; align-items: flex-end; flex-wrap: wrap; padding-bottom: 6px; }
-.header-field { display: flex; flex-direction: column; }
-.header-field label { font-size: 0.7rem; font-weight: bold; color: var(--line); text-transform: uppercase; }
-.header-field input { border: none; border-bottom: 1px solid var(--ink); background: transparent; border-radius: 0; min-width: 170px; }
-.header-field.small input { width: 50px; min-width: 50px; text-align: center; }
-
-.vitals-box { display: flex; border: 2px solid var(--line); border-radius: 3px; }
-.vslot { flex: 1; text-align: center; padding: 6px 10px; border-left: 1px solid var(--line-soft); min-width: 78px; }
-.vslot:first-child { border-left: none; }
-.vslot .vtitle { font-size: 0.68rem; font-weight: bold; color: var(--line); text-transform: uppercase; letter-spacing: 0.03em; }
-.vslot .vval { font-size: 1.15rem; margin: 4px 0 3px; }
-.vslot .vval input.frac { width: 24px; border: none; background: transparent; text-align: center; font-size: 1.05rem; padding: 0; }
-.vslot .vval.single { font-weight: bold; }
-.vslot .vbonus-inline input {
-  width: 32px; height: 18px; border-radius: 9px; text-align: center;
-  font-size: 0.7rem; padding: 0; border: 1px solid var(--line-soft);
+label {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 2px;
 }
 
-hr.divider { border: none; border-top: 2px solid var(--line); margin: 12px 0 16px; }
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: end;
+  margin-bottom: 8px;
+}
+.header-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 84px;
+  gap: 14px;
+}
+.header-fields input {
+  border: none;
+  border-bottom: 1px solid #cab28a;
+  background: transparent;
+  border-radius: 0;
+  padding: 2px 0;
+}
 
-/* MAIN 3 COLUMN */
-.main-3col { display: grid; grid-template-columns: 190px 1fr 1fr; gap: 16px; }
-@media (max-width: 900px) { .main-3col { grid-template-columns: 1fr; } }
+.vitals {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 2px solid var(--red);
+}
+.vital {
+  min-width: 94px;
+  text-align: center;
+  border-left: 1px solid #d6c19f;
+  padding: 6px 8px 4px;
+}
+.vital:first-child { border-left: none; }
+.vital .title {
+  color: var(--red);
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.vital .value {
+  margin: 3px 0 4px;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 700;
+}
+.vital .value.single { font-size: 2.1rem; }
+.vital .frac {
+  width: 32px;
+  border: none;
+  background: transparent;
+  font-size: 2rem;
+  padding: 0;
+}
+.vital .bonus {
+  width: 64px;
+  height: 18px;
+  border-radius: 10px;
+  font-size: 0.63rem;
+  padding: 0;
+  text-transform: uppercase;
+}
 
-.col-title { font-size: 0.85rem; font-weight: bold; color: var(--line); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+.sheet-grid {
+  display: grid;
+  grid-template-columns: 156px 1fr;
+  gap: 14px;
+}
 
-/* ATTRIBUTES */
-.attr-pairs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; }
-.attr-slot label { display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 4px; text-align: center; }
-.attr-slot input { width: 100%; height: 62px; font-size: 1.4rem; }
+.section-title {
+  color: var(--red);
+  font-size: 1.85rem;
+  line-height: 0.9;
+  text-transform: uppercase;
+  margin: 6px 0 8px;
+}
 
-.grace-box { border: 1px solid var(--line); border-radius: 4px; padding: 10px 8px; text-align: center; margin-top: 14px; }
-.grace-box .gtitle { font-size: 0.72rem; font-weight: bold; color: var(--line); text-transform: uppercase; letter-spacing: 0.04em; }
-.grace-meter { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; margin: 8px 4px; }
+.left-col .section-title { margin-top: 10px; }
+
+.attr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 12px;
+}
+.attr-box input {
+  height: 52px;
+  font-size: 2rem;
+  border: 2px solid #ddc395;
+}
+
+.grace-box,
+.weight-box {
+  border: 2px solid var(--red);
+  padding: 8px 8px;
+  text-align: center;
+  margin-top: 14px;
+}
+.mini-title {
+  color: var(--red);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.grace-meter {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0;
+  border: 1px solid var(--red);
+  margin: 8px 6px 5px;
+}
 .pip-sq {
-  width: 18px; height: 18px; border-radius: 4px;
-  border: 1.5px solid var(--line); cursor: pointer;
+  height: 14px;
+  border-right: 1px solid var(--red);
   background: var(--field-bg);
-  transition: background-color 0.15s ease, transform 0.1s ease;
+  cursor: pointer;
 }
-.pip-sq:hover { transform: scale(1.1); }
-.pip-sq.filled { background: var(--line); }
-.grace-box .gcaption { font-size: 0.66rem; color: var(--muted); font-style: italic; }
+.pip-sq:last-child { border-right: none; }
+.pip-sq.filled { background: var(--red); }
+.small-note {
+  font-size: 0.68rem;
+  color: #5a4f40;
+  font-style: italic;
+}
+.weight-box .wval { font-size: 2.05rem; margin: 5px 0 2px; font-weight: 700; }
+.weight-box .wstatus { font-size: 0.72rem; text-transform: uppercase; color: #5a4f40; }
 
-/* GEAR CARDS */
-.gear-card { border: 1px solid var(--line-soft); border-radius: 4px; padding: 7px 9px; margin-bottom: 10px; position: relative; }
-.gear-row1 { display: flex; gap: 8px; align-items: center; }
-.gear-row1 .name-field { flex: 1; }
-.gear-row1 .weight-field { width: 54px; }
-.gear-row1 label, .gear-row2 label { display: block; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; margin-bottom: 1px; }
-.gear-row1 input, .gear-row2 input { width: 100%; height: 22px; padding: 1px 5px; font-size: 0.8rem; }
-.gear-row2 { display: grid; gap: 6px; margin-top: 5px; }
+.right-area {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.gear-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.card-stack { display: grid; gap: 10px; }
+
+.gear-card {
+  border: 2px solid var(--line);
+  padding: 6px;
+}
+.gear-row1 {
+  display: grid;
+  grid-template-columns: 1fr 64px;
+  gap: 6px;
+}
+.gear-row2 {
+  margin-top: 4px;
+  display: grid;
+  gap: 6px;
+}
 .gear-row2.cols-1 { grid-template-columns: 1fr; }
 .gear-row2.cols-2 { grid-template-columns: 1fr 1fr; }
 .gear-row2.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
-.gear-notes { margin-top: 5px; }
-.gear-notes label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 1px; }
-.gear-notes textarea { width: 100%; min-height: 42px; padding: 3px 5px; font-size: 0.8rem; resize: vertical; }
+.gear-card input, .gear-card textarea {
+  height: 20px;
+  font-size: 0.75rem;
+}
+.gear-notes { margin-top: 4px; }
+.gear-notes textarea {
+  min-height: 24px;
+  resize: none;
+}
 
-/* ARTIFACT SLOTS */
-.artifact-title { font-size: 0.8rem; font-weight: bold; color: var(--line); text-transform: uppercase; margin: 10px 0 6px; }
-.artifact-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-.artifact-row .gear-notes textarea { min-height: 32px; font-size: 0.75rem; }
+.notes-title {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+.notes-box {
+  min-height: 220px;
+  border: 2px solid var(--line);
+  padding: 8px;
+}
 
-/* WEIGHT */
-.weight-box { border: 1px solid var(--line); border-radius: 4px; padding: 10px 8px; text-align: center; margin-top: 10px; }
-.weight-box .wtitle { font-size: 0.72rem; font-weight: bold; color: var(--line); text-transform: uppercase; letter-spacing: 0.04em; }
-.weight-box .wval { font-size: 1.4rem; font-weight: bold; margin: 6px 0 2px; }
-.weight-box .wstatus { font-size: 0.66rem; color: var(--muted); font-style: italic; text-transform: uppercase; }
+.artifact-title {
+  color: var(--red);
+  font-size: 1.85rem;
+  line-height: 0.9;
+  text-transform: uppercase;
+  margin: 12px 0 6px;
+}
+.artifact-row {
+  border: 2px solid var(--line);
+  padding: 6px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.artifact-row .gear-card { border-width: 1px; }
 
-/* NOTES PANEL (weapons column) */
-.notes-panel { border: 1px solid var(--line); border-radius: 4px; padding: 8px 10px; margin-top: 10px; }
-.notes-panel .col-title { margin-bottom: 6px; }
-.notes-panel textarea { min-height: 140px; border: none; }
+@media (max-width: 1080px) {
+  .header { grid-template-columns: 1fr; }
+  .sheet-grid { grid-template-columns: 1fr; }
+  .gear-columns { grid-template-columns: 1fr; }
+  .artifact-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .header-fields { grid-template-columns: 1fr; }
+  .vitals { grid-template-columns: repeat(2, 1fr); }
+  .attr-grid { grid-template-columns: 1fr 1fr; }
+  .artifact-row { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 <form autocomplete="off" onsubmit="return false;">
 <div class="page">
 
-  <div class="header-row">
-    <div class="header-left">
-      <div class="header-field"><label>Character Name</label><input type="text"></div>
-      <div class="header-field"><label>Species</label><input type="text"></div>
-      <div class="header-field small"><label>Level</label><input id="level" type="number" placeholder="1" min="1" oninput="recalc()"></div>
+  <div class="header">
+    <div class="header-fields">
+      <div><label>Character Name</label><input type="text"></div>
+      <div><label>Species</label><input type="text"></div>
+      <div><label>Level</label><input id="level" type="number" placeholder="1" min="1" oninput="recalc()"></div>
     </div>
-    <div class="vitals-box">
-      <div class="vslot">
-        <div class="vtitle">HP</div>
-        <div class="vval"><input class="frac" id="hpCurrent" type="number" placeholder="0"> / <span id="hpMax">8</span></div>
-        <div class="vbonus-inline"><input type="number" id="hpBonus" placeholder="0" title="Bonus" oninput="recalc()"></div>
+
+    <div class="vitals">
+      <div class="vital">
+        <div class="title">HP</div>
+        <div class="value"><input class="frac" id="hpCurrent" type="number" placeholder="0"> / <span id="hpMax">8</span></div>
+        <input class="bonus" type="number" id="hpBonus" placeholder="Bonus" title="Bonus" oninput="recalc()">
       </div>
-      <div class="vslot">
-        <div class="vtitle">Armor</div>
-        <div class="vval single" id="armorVal">6</div>
-        <div class="vbonus-inline"><input type="number" id="armorBonus" placeholder="0" title="Bonus" oninput="recalc()"></div>
+      <div class="vital">
+        <div class="title">Armor</div>
+        <div class="value single" id="armorVal">6</div>
+        <input class="bonus" type="number" id="armorBonus" placeholder="Bonus" title="Bonus" oninput="recalc()">
       </div>
-      <div class="vslot">
-        <div class="vtitle">Mana</div>
-        <div class="vval"><input class="frac" id="manaCurrent" type="number" placeholder="0"> / <span id="manaMax">1</span></div>
-        <div class="vbonus-inline"><input type="number" id="manaBonus" placeholder="0" title="Bonus" oninput="recalc()"></div>
+      <div class="vital">
+        <div class="title">Mana</div>
+        <div class="value"><input class="frac" id="manaCurrent" type="number" placeholder="0"> / <span id="manaMax">1</span></div>
+        <input class="bonus" type="number" id="manaBonus" placeholder="Bonus" title="Bonus" oninput="recalc()">
       </div>
-      <div class="vslot">
-        <div class="vtitle">Speed</div>
-        <div class="vval single" id="speedVal">6</div>
-        <div class="vbonus-inline"><input type="number" id="speedBonus" placeholder="0" title="Bonus" oninput="recalc()"></div>
+      <div class="vital">
+        <div class="title">Speed</div>
+        <div class="value single" id="speedVal">6</div>
+        <input class="bonus" type="number" id="speedBonus" placeholder="Bonus" title="Bonus" oninput="recalc()">
       </div>
     </div>
   </div>
 
-  <hr class="divider">
-
-  <div class="main-3col">
-    <!-- ATTRIBUTES -->
-    <div>
-      <div class="col-title">Attributes</div>
-      <div class="attr-pairs">
-        <div class="attr-slot"><label>Vigor</label><input id="vigor" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Fortitude</label><input id="fortitude" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Strength</label><input id="strength" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Dexterity</label><input id="dexterity" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Intelligence</label><input id="intelligence" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Arcane</label><input id="arcane" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Charisma</label><input id="charisma" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Reflex</label><input id="reflex" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Insight</label><input id="insight" type="number" placeholder="0" oninput="recalc()"></div>
-        <div class="attr-slot"><label>Awareness</label><input id="awareness" type="number" placeholder="0" oninput="recalc()"></div>
+  <div class="sheet-grid">
+    <div class="left-col">
+      <div class="section-title">Attributes</div>
+      <div class="attr-grid">
+        <div class="attr-box"><label>Vigor</label><input id="vigor" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Fortitude</label><input id="fortitude" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Strength</label><input id="strength" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Dexterity</label><input id="dexterity" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Intel.</label><input id="intelligence" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Arcane</label><input id="arcane" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Charisma</label><input id="charisma" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Reflex</label><input id="reflex" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Insight</label><input id="insight" type="number" placeholder="0" oninput="recalc()"></div>
+        <div class="attr-box"><label>Aware.</label><input id="awareness" type="number" placeholder="0" oninput="recalc()"></div>
       </div>
 
       <div class="grace-box">
-        <div class="gtitle">Grace</div>
+        <div class="mini-title">Grace</div>
         <div class="grace-meter" id="gracePips"></div>
-        <div class="gcaption">+1 per failure. Max 8.</div>
+        <div class="small-note">+1 per failure. Max 8.</div>
       </div>
 
       <div class="weight-box">
-        <div class="wtitle">Weight</div>
+        <div class="mini-title">Weight</div>
         <div class="wval"><span id="totalWeight">0</span> / <span id="maxWeight">1</span></div>
         <div class="wstatus">Status: <span id="bandTag">Light</span></div>
       </div>
     </div>
 
-    <!-- DEFENSIVE GEAR -->
-    <div>
-      <div class="col-title">Defensive Gear</div>
+    <div class="right-area">
+      <div class="gear-columns">
+        <div>
+          <div class="section-title">Defensive Gear</div>
+          <div class="card-stack">
+            <div class="gear-card">
+              <div class="gear-row1">
+                <div><label>Armor Name</label><input></div>
+                <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+              </div>
+              <div class="gear-row2 cols-2">
+                <div><label>REQ</label><input></div>
+                <div><label>Armor</label><input type="number"></div>
+              </div>
+              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+            </div>
 
-      <div class="gear-card">
-        <div class="gear-row1">
-          <div class="name-field"><label>Armor</label><input></div>
-          <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+            <div class="gear-card">
+              <div class="gear-row1">
+                <div><label>Shield Name</label><input></div>
+                <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+              </div>
+              <div class="gear-row2 cols-2">
+                <div><label>REQ</label><input></div>
+                <div><label>Armor/Bonus</label><input></div>
+              </div>
+              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+            </div>
+
+            <div class="gear-card">
+              <div class="gear-row1">
+                <div><label>Cloak/Misc</label><input></div>
+                <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+              </div>
+              <div class="gear-row2 cols-2">
+                <div><label>REQ</label><input></div>
+                <div><label>Stats</label><input></div>
+              </div>
+              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+            </div>
+          </div>
         </div>
-        <div class="gear-row2 cols-2">
-          <div><label>REQ</label><input></div>
-          <div><label>Armor</label><input type="number"></div>
+
+        <div>
+          <div class="section-title">Weapons / Catalyst</div>
+          <div class="card-stack" id="weaponCards">
+            <div class="gear-card">
+              <div class="gear-row1">
+                <div><label>Weapon</label><input></div>
+                <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+              </div>
+              <div class="gear-row2 cols-3">
+                <div><label>REQ</label><input></div>
+                <div><label>ATK</label><input type="number"></div>
+                <div><label>DMG</label><input type="number"></div>
+              </div>
+              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+            </div>
+
+            <div class="gear-card">
+              <div class="gear-row1">
+                <div><label>Weapon</label><input></div>
+                <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+              </div>
+              <div class="gear-row2 cols-3">
+                <div><label>REQ</label><input></div>
+                <div><label>ATK</label><input type="number"></div>
+                <div><label>DMG</label><input type="number"></div>
+              </div>
+              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+            </div>
+
+            <div class="gear-card">
+              <div class="gear-row1">
+                <div><label>Weapon</label><input></div>
+                <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+              </div>
+              <div class="gear-row2 cols-3">
+                <div><label>REQ</label><input></div>
+                <div><label>ATK</label><input type="number"></div>
+                <div><label>DMG</label><input type="number"></div>
+              </div>
+              <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+            </div>
+          </div>
         </div>
-        <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
       </div>
 
-      <div class="gear-card">
-        <div class="gear-row1">
-          <div class="name-field"><label>Shield</label><input></div>
-          <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-        </div>
-        <div class="gear-row2 cols-2">
-          <div><label>REQ</label><input></div>
-          <div><label>Armor/Bonus</label><input></div>
-        </div>
-        <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
-      </div>
-
-      <div class="gear-card">
-        <div class="gear-row1">
-          <div class="name-field"><label>Cloak/Misc</label><input></div>
-          <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-        </div>
-        <div class="gear-row2 cols-2">
-          <div><label>REQ</label><input></div>
-          <div><label>Stats</label><input></div>
-        </div>
-        <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
-      </div>
+      <div class="section-title notes-title">Notes</div>
+      <textarea class="notes-box" placeholder="Traits, spells, backstory..."></textarea>
 
       <div class="artifact-title">Artifact Slots</div>
       <div class="artifact-row">
         <div class="gear-card">
           <div class="gear-row1">
-            <div class="name-field"><label>Artifact 1</label><input></div>
-            <div class="weight-field"><label>Wt</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-          </div>
-          <div class="gear-row2 cols-1">
-            <div><label>REQ</label><input></div>
+            <div><label>Art 1</label><input></div>
+            <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
           <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
         </div>
-        <div class="gear-card">
-          <div class="gear-row1">
-            <div class="name-field"><label>Artifact 2</label><input></div>
-            <div class="weight-field"><label>Wt</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-          </div>
-          <div class="gear-row2 cols-1">
-            <div><label>REQ</label><input></div>
-          </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
-        </div>
-        <div class="gear-card">
-          <div class="gear-row1">
-            <div class="name-field"><label>Artifact 3</label><input></div>
-            <div class="weight-field"><label>Wt</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-          </div>
-          <div class="gear-row2 cols-1">
-            <div><label>REQ</label><input></div>
-          </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
-        </div>
-        <div class="gear-card">
-          <div class="gear-row1">
-            <div class="name-field"><label>Artifact 4</label><input></div>
-            <div class="weight-field"><label>Wt</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-          </div>
-          <div class="gear-row2 cols-1">
-            <div><label>REQ</label><input></div>
-          </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
-        </div>
-      </div>
-    </div>
 
-    <!-- WEAPONS / CATALYST -->
-    <div>
-      <div class="col-title">Weapons / Catalyst</div>
-      <div id="weaponCards">
         <div class="gear-card">
           <div class="gear-row1">
-            <div class="name-field"><label>Weapon</label><input></div>
-            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-          </div>
-          <div class="gear-row2 cols-3">
-            <div><label>REQ</label><input></div>
-            <div><label>Attack</label><input type="number"></div>
-            <div><label>Damage</label><input type="number"></div>
-          </div>
-          <div class="gear-notes"><label>Notes (Crit, Scaling)</label><textarea></textarea></div>
-        </div>
-        <div class="gear-card">
-          <div class="gear-row1">
-            <div class="name-field"><label>Weapon</label><input></div>
-            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-          </div>
-          <div class="gear-row2 cols-3">
-            <div><label>REQ</label><input></div>
-            <div><label>Attack</label><input type="number"></div>
-            <div><label>Damage</label><input type="number"></div>
+            <div><label>Art 2</label><input></div>
+            <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
           </div>
           <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
         </div>
-        <div class="gear-card">
-          <div class="gear-row1">
-            <div class="name-field"><label>Weapon</label><input></div>
-            <div class="weight-field"><label>Weight</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
-          </div>
-          <div class="gear-row2 cols-3">
-            <div><label>REQ</label><input></div>
-            <div><label>Attack</label><input type="number"></div>
-            <div><label>Damage</label><input type="number"></div>
-          </div>
-          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
-        </div>
-      </div>
 
-      <div class="notes-panel">
-        <div class="col-title">Notes</div>
-        <textarea placeholder="Traits, spells, backstory..."></textarea>
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div><label>Art 3</label><input></div>
+            <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+        </div>
+
+        <div class="gear-card">
+          <div class="gear-row1">
+            <div><label>Art 4</label><input></div>
+            <div><label>WT</label><input type="number" class="gear-weight" oninput="recalcWeight()"></div>
+          </div>
+          <div class="gear-notes"><label>Notes</label><textarea></textarea></div>
+        </div>
       </div>
     </div>
   </div>
