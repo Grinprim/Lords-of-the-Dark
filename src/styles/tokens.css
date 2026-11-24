@@ -1,0 +1,59 @@
+/* Design tokens. Light is parchment. Dark is iron. Contrast is checked by scripts/check-contrast.ts. */
+:root {
+  --font-serif: 'Source Serif 4', 'Iowan Old Style', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+
+  --bg: #efe7d4;
+  --surface: #f7f1e3;
+  --surface-2: #e7dcc2;
+  --ink: #1d1a15;
+  --ink-2: #4a4234;
+  --line: #b9ab8c;
+  --line-strong: #85765a;
+  --accent: #7b2a1c;
+  --accent-ink: #f7f1e3;
+  --brass: #6b5314;
+  --focus: #1f4e5f;
+
+  --st-approved: #2f5d3a;
+  --st-provisional: #6b5314;
+  --st-legacy: #55504a;
+  --st-owner-review: #8a3b12;
+  --st-proposal: #1f4e5f;
+
+  --ok: #2f5d3a;
+  --warn: #8a3b12;
+  --bad: #8c1d1d;
+
+  --radius: 2px;
+  --gap: 1rem;
+  --measure: 68ch;
+  --sidebar: 17rem;
+  --topbar: 3.5rem;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #151310;
+  --surface: #1d1a16;
+  --surface-2: #26221b;
+  --ink: #ebe2cf;
+  --ink-2: #b4a98f;
+  --line: #3b342a;
+  --line-strong: #7a6e58;
+  --accent: #d98c5f;
+  --accent-ink: #1a120d;
+  --brass: #c8a24a;
+  --focus: #7fc0cf;
+
+  --st-approved: #8fc09a;
+  --st-provisional: #d3b25b;
+  --st-legacy: #aaa392;
+  --st-owner-review: #e39a6e;
+  --st-proposal: #8dbfcf;
+
+  --ok: #8fc09a;
+  --warn: #e39a6e;
+  --bad: #ee8f87;
+  color-scheme: dark;
+}

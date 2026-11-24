@@ -1,0 +1,63 @@
+.app { display: grid; grid-template-columns: var(--sidebar) minmax(0, 1fr); min-height: 100dvh; }
+.sidebar {
+  position: sticky; top: 0; height: 100dvh; overflow-y: auto;
+  border-right: 1px solid var(--line); background: var(--surface);
+  padding: 1.1rem 0 2rem; display: flex; flex-direction: column; gap: 0.25rem;
+}
+.brand { display: block; padding: 0 1.25rem 1rem; text-decoration: none; color: var(--ink); border-bottom: 1px solid var(--line); margin-bottom: 0.75rem; }
+.brand b { display: block; font-family: var(--font-serif); font-size: 1.35rem; line-height: 1.1; }
+.brand span { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); }
+.nav { list-style: none; margin: 0; padding: 0; }
+.nav li { margin: 0; }
+.nav a {
+  display: flex; align-items: center; gap: 0.6rem; padding: 0.42rem 1.25rem;
+  color: var(--ink); text-decoration: none; border-left: 3px solid transparent; font-size: 0.9rem;
+}
+.nav a:hover { background: var(--surface-2); }
+.nav a[aria-current='page'] { border-left-color: var(--accent); background: var(--surface-2); font-weight: 600; }
+.nav .group { padding: 0.9rem 1.25rem 0.25rem; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); font-weight: 600; }
+.main { min-width: 0; display: flex; flex-direction: column; }
+.topbar {
+  position: sticky; top: 0; z-index: 20; height: var(--topbar);
+  display: flex; align-items: center; gap: 0.6rem; padding: 0 1.25rem;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.topbar .spacer { flex: 1; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; font-size: 0.8125rem; color: var(--ink-2); min-width: 0; }
+.crumbs a { color: var(--ink-2); }
+.crumbs span[aria-current] { color: var(--ink); font-weight: 600; }
+.menu-btn { display: none; }
+.scrim { display: none; }
+.page { width: 100%; max-width: 78rem; padding: 2rem 1.5rem 4rem; margin: 0 auto; }
+.page-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.25rem; margin-bottom: 1.75rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--line); }
+.page-head p { max-width: var(--measure); color: var(--ink-2); font-family: var(--font-serif); font-size: 1.1rem; margin: 0.25rem 0 0; }
+.prose { max-width: var(--measure); font-family: var(--font-serif); font-size: 1.0625rem; line-height: 1.65; }
+.prose h2, .prose h3 { margin-top: 1.8em; }
+.rail { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 1.5rem 2.5rem; padding: 1.5rem 0; border-top: 1px solid var(--line); }
+.rail > h2, .rail > h3 { margin: 0; font-size: 1.1rem; }
+.split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2.5rem; }
+.split-wide { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 2.5rem; }
+.stack > * + * { margin-top: var(--gap); }
+.row { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.row-between { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 1rem; }
+.statusbar { font-size: 0.8125rem; color: var(--ink-2); display: inline-flex; align-items: center; gap: 0.4rem; }
+.footer { margin-top: auto; border-top: 1px solid var(--line); padding: 1rem 1.5rem; font-size: 0.8125rem; color: var(--ink-2); display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+
+@media (max-width: 1100px) {
+  .split, .split-wide { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+}
+@media (max-width: 960px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .sidebar {
+    position: fixed; z-index: 40; top: 0; bottom: 0; left: 0; width: min(20rem, 88vw); height: 100dvh;
+    transform: translateX(-102%); transition: transform 0.18s ease; border-right: 1px solid var(--line-strong);
+  }
+  .sidebar[data-open='true'] { transform: none; }
+  .scrim[data-open='true'] { display: block; position: fixed; inset: 0; z-index: 30; background: rgba(10, 8, 6, 0.55); border: 0; }
+  .menu-btn { display: inline-flex; }
+  .page { padding: 1.25rem 1rem 3rem; }
+  .rail { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .topbar { padding: 0 0.75rem; }
+  .crumbs.hide-small { display: none; }
+}

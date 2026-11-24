@@ -1,0 +1,20 @@
+/* Print fallback. White paper, black ink, no navigation, room to write. */
+@media print {
+  :root, :root[data-theme='dark'] {
+    --bg: #fff; --surface: #fff; --surface-2: #fff; --ink: #000; --ink-2: #000; --line: #000; --line-strong: #000;
+    --accent: #000; --accent-ink: #fff; --brass: #000; --focus: #000;
+    --st-approved: #000; --st-provisional: #000; --st-legacy: #000; --st-owner-review: #000; --st-proposal: #000;
+  }
+  html, body { background: #fff !important; color: #000 !important; font-size: 11pt; }
+  .sidebar, .topbar, .scrim, .footer, .no-print, .btn, .tabs, .skip, .toast { display: none !important; }
+  .app { display: block; }
+  .page { max-width: none; padding: 0; }
+  .panel, .note, .stat { border-color: #000 !important; background: #fff !important; }
+  a { color: #000; text-decoration: none; }
+  .sheet-section { break-inside: avoid; page-break-inside: avoid; }
+  .sheet-page { break-after: page; page-break-after: always; }
+  .write-lines { display: block !important; }
+  .detail { position: static; max-height: none; overflow: visible; }
+  @page { margin: 14mm; }
+}
+.write-lines { display: none; height: 7rem; background: repeating-linear-gradient(to bottom, transparent 0, transparent 1.6rem, #000 1.6rem, #000 calc(1.6rem + 1px)); }
